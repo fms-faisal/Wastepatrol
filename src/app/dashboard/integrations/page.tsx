@@ -1,106 +1,127 @@
+'use client';
+
 import * as React from 'react';
-import type { Metadata } from 'next';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Unstable_Grid2';
-import { Download as DownloadIcon } from '@phosphor-icons/react/dist/ssr/Download';
-import { Plus as PlusIcon } from '@phosphor-icons/react/dist/ssr/Plus';
-import { Upload as UploadIcon } from '@phosphor-icons/react/dist/ssr/Upload';
-import dayjs from 'dayjs';
+import axios from 'axios';
+import L from 'leaflet';
+import { Circle, MapContainer, TileLayer, useMap } from 'react-leaflet';
 
-import { config } from '@/config';
-import { IntegrationCard } from '@/components/dashboard/integrations/integrations-card';
-import type { Integration } from '@/components/dashboard/integrations/integrations-card';
-import { CompaniesFilters } from '@/components/dashboard/integrations/integrations-filters';
+import 'leaflet/dist/leaflet.css';
 
-export const metadata = { title: `Integrations | Dashboard | ${config.site.name}` } satisfies Metadata;
+// HeatmapLayer component to render the heatmap layer
+const HeatmapLayer: React.FC<{ points: [number, number, number][] }> = ({ points }) => {
+  const map = useMap();
 
-const integrations = [
-  {
-    id: 'INTEG-006',
-    title: 'Dropbox',
-    description: 'Dropbox is a file hosting service that offers cloud storage, file synchronization, a personal cloud.',
-    logo: '/assets/logo-dropbox.png',
-    installs: 594,
-    updatedAt: dayjs().subtract(12, 'minute').toDate(),
-  },
-  {
-    id: 'INTEG-005',
-    title: 'Medium Corporation',
-    description: 'Medium is an online publishing platform developed by Evan Williams, and launched in August 2012.',
-    logo: '/assets/logo-medium.png',
-    installs: 625,
-    updatedAt: dayjs().subtract(43, 'minute').subtract(1, 'hour').toDate(),
-  },
-  {
-    id: 'INTEG-004',
-    title: 'Slack',
-    description: 'Slack is a cloud-based set of team collaboration tools and services, founded by Stewart Butterfield.',
-    logo: '/assets/logo-slack.png',
-    installs: 857,
-    updatedAt: dayjs().subtract(50, 'minute').subtract(3, 'hour').toDate(),
-  },
-  {
-    id: 'INTEG-003',
-    title: 'Lyft',
-    description: 'Lyft is an on-demand transportation company based in San Francisco, California.',
-    logo: '/assets/logo-lyft.png',
-    installs: 406,
-    updatedAt: dayjs().subtract(7, 'minute').subtract(4, 'hour').subtract(1, 'day').toDate(),
-  },
-  {
-    id: 'INTEG-002',
-    title: 'GitHub',
-    description: 'GitHub is a web-based hosting service for version control of code using Git.',
-    logo: '/assets/logo-github.png',
-    installs: 835,
-    updatedAt: dayjs().subtract(31, 'minute').subtract(4, 'hour').subtract(5, 'day').toDate(),
-  },
-  {
-    id: 'INTEG-001',
-    title: 'Squarespace',
-    description: 'Squarespace provides software as a service for website building and hosting. Headquartered in NYC.',
-    logo: '/assets/logo-squarespace.png',
-    installs: 435,
-    updatedAt: dayjs().subtract(25, 'minute').subtract(6, 'hour').subtract(6, 'day').toDate(),
-  },
-] satisfies Integration[];
+  React.useEffect(() => {
+    if (map) {
+      // Create the heatmap layer with increased radius and blur
+      const heatLayer = L.heatLayer(points, {
+        radius: 30, // Increase radius for larger heat points
+        blur: 20, // Increase blur for smoother transition
+        max: 1, // Set max to the maximum intensity value (adjust as needed)
+      }).addTo(map);
 
+      // Clean up the layer when the component unmounts
+      return () => {
+        map.removeLayer(heatLayer);
+      };
+    }
+  }, [map, points]);
+
+  return null;
+};
+
+// Main Page component
 export default function Page(): React.JSX.Element {
+  const [data, setData] = React.useState<{ latitude: number; longitude: number }[]>([]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://192.168.0.3:5000/api/heatmap-data');
+        const values = response.data.values;
+
+        // Filter out entries with unknown latitude or longitude
+        const validData = values
+          .filter((item) => item.latitude !== 'unknown' && item.longitude !== 'unknown')
+          .map((item) => ({
+            latitude: parseFloat(item.latitude),
+            longitude: parseFloat(item.longitude),
+          }));
+
+        // Set the valid data for rendering circles and heatmap
+        setData(validData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Function to find current location
+  const findCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const map = useMap();
+          map.setView([latitude, longitude], 15); // Adjust the zoom level as needed
+
+          // Optionally, you can add a marker for the current location
+          L.marker([latitude, longitude]).addTo(map).bindPopup('You are here!').openPopup();
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+          alert('Unable to retrieve your location.');
+        }
+      );
+    } else {
+      alert('Geolocation is not supported by this browser.');
+    }
+  };
+
   return (
-    <Stack spacing={3}>
-      <Stack direction="row" spacing={3}>
-        <Stack spacing={1} sx={{ flex: '1 1 auto' }}>
-          <Typography variant="h4">Integrations</Typography>
-          <Stack sx={{ alignItems: 'center' }} direction="row" spacing={1}>
-            <Button color="inherit" startIcon={<UploadIcon fontSize="var(--icon-fontSize-md)" />}>
-              Import
-            </Button>
-            <Button color="inherit" startIcon={<DownloadIcon fontSize="var(--icon-fontSize-md)" />}>
-              Export
-            </Button>
-          </Stack>
-        </Stack>
-        <div>
-          <Button startIcon={<PlusIcon fontSize="var(--icon-fontSize-md)" />} variant="contained">
-            Add
-          </Button>
-        </div>
-      </Stack>
-      <CompaniesFilters />
-      <Grid container spacing={3}>
-        {integrations.map((integration) => (
-          <Grid key={integration.id} lg={4} md={6} xs={12}>
-            <IntegrationCard integration={integration} />
-          </Grid>
+    <>
+      <button
+        onClick={findCurrentLocation}
+        style={{
+          position: 'absolute',
+          bottom: '20px',
+          right: '20px',
+          width: '50px',
+          height: '50px',
+          borderRadius: '50%',
+          backgroundColor: '#007bff',
+          color: 'white',
+          border: 'none',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '24px',
+          outline: 'none',
+        }}
+      >
+        <i className="fas fa-location-arrow" />
+      </button>
+      <MapContainer center={[23.8103, 90.4125]} zoom={12} style={{ height: '100vh', width: '100%' }}>
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        {data.length > 0 && <HeatmapLayer points={data.map((item) => [item.latitude, item.longitude, 5])} />}
+        {data.map((item, index) => (
+          <Circle
+            key={index}
+            center={[item.latitude, item.longitude]}
+            radius={50} // Set the radius of the circle
+            color="blue" // Set the circle color
+            fillColor="blue" // Set the fill color
+            fillOpacity={0.5} // Set the fill opacity
+          />
         ))}
-      </Grid>
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Pagination count={3} size="small" />
-      </Box>
-    </Stack>
+      </MapContainer>
+    </>
   );
 }

@@ -70,7 +70,7 @@ export function SideNav(): React.JSX.Element {
               Workspace
             </Typography>
             <Typography color="inherit" variant="subtitle1">
-              Devias
+              Dhaka
             </Typography>
           </Box>
           <CaretUpDownIcon />
@@ -82,14 +82,14 @@ export function SideNav(): React.JSX.Element {
       </Box>
       <Divider sx={{ borderColor: 'var(--mui-palette-neutral-700)' }} />
       <Stack spacing={2} sx={{ p: '12px' }}>
-        <div>
+        {/* <div>
           <Typography color="var(--mui-palette-neutral-100)" variant="subtitle2">
             Need more features?
           </Typography>
           <Typography color="var(--mui-palette-neutral-400)" variant="body2">
             Check out our Pro solution template.
           </Typography>
-        </div>
+        </div> */}
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Box
             component="img"
@@ -107,7 +107,7 @@ export function SideNav(): React.JSX.Element {
           target="_blank"
           variant="contained"
         >
-          Pro version
+          Generate Report
         </Button>
       </Stack>
     </Box>
