@@ -35,6 +35,7 @@
     "dayjs": "1.11.11",
     "leaflet": "^1.9.4",
     "leaflet.heat": "^0.2.0",
+    "mapbox-gl": "^3.7.0",
     "next": "14.2.4",
     "react": "18.3.1",
     "react-apexcharts": "1.4.1",
@@ -42,6 +43,7 @@
     "react-heatmap-grid": "^0.9.1",
     "react-hook-form": "7.52.0",
     "react-leaflet": "^4.2.1",
+    "react-map-gl": "^7.1.7",
     "zod": "3.23.8"
   },
   "devDependencies": {
