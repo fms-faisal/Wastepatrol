@@ -7,7 +7,7 @@ import { useColorScheme } from '@mui/material/styles';
 import { NoSsr } from '@/components/core/no-ssr';
 
 const HEIGHT = 60;
-const WIDTH = 60;
+const WIDTH = 150;
 
 type Color = 'dark' | 'light';
 
@@ -21,14 +21,13 @@ export interface LogoProps {
 export function Logo({ color = 'dark', emblem, height = HEIGHT, width = WIDTH }: LogoProps): React.JSX.Element {
   let url: string;
 
-  url = 'WastePatrol';
-  // if (emblem) {
-  //   url = color === 'light' ? '/assets/logo-emblem.svg' : '/assets/logo-emblem--dark.svg';
-  // } else {
-  //   url = color === 'light' ? '/assets/logo.svg' : '/assets/logo--dark.svg';
-  // }
+  if (emblem) {
+    url = color === 'light' ? '/assets/logo1.png' : '/assets/logo1.png';
+  } else {
+    url = color === 'light' ? '/assets/logo1.png' : '/assets/logo1.png';
+  }
 
-  return <Box alt="logo" component="img" height={height} src={url} width={width} />;
+  return <Box alt="logo" component="img" height={height} src={url} width="200px" />;
 }
 
 export interface DynamicLogoProps {

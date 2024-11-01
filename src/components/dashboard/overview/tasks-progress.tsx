@@ -25,9 +25,9 @@ export function TasksProgress({ value, sx }: TasksProgressProps): React.JSX.Elem
               </Typography>
               <Typography variant="h4">{value}%</Typography>
             </Stack>
-            <Avatar sx={{ backgroundColor: 'var(--mui-palette-warning-main)', height: '56px', width: '56px' }}>
+            {/* <Avatar sx={{ backgroundColor: 'var(--mui-palette-warning-main)', height: '56px', width: '56px' }}>
               <ListBulletsIcon fontSize="var(--icon-fontSize-lg)" />
-            </Avatar>
+            </Avatar> */}
           </Stack>
           <div>
             <LinearProgress value={value} variant="determinate" />

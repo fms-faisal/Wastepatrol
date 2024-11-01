@@ -102,7 +102,7 @@ export function SideNav(): React.JSX.Element {
           component="a"
           endIcon={<ArrowSquareUpRightIcon fontSize="var(--icon-fontSize-md)" />}
           fullWidth
-          href="https://material-kit-pro-react.devias.io/"
+          href="http://localhost:3000/dashboard"
           sx={{ mt: 2 }}
           target="_blank"
           variant="contained"

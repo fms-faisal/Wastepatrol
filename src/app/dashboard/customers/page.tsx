@@ -13,99 +13,124 @@ import { CustomersFilters } from '@/components/dashboard/customer/customers-filt
 import { CustomersTable } from '@/components/dashboard/customer/customers-table';
 import type { Customer } from '@/components/dashboard/customer/customers-table';
 
+// Metadata for the page
 export const metadata = { title: `Contributor | Dashboard | ${config.site.name}` } satisfies Metadata;
 
-const customers = [
+// Officially hired contributors
+const hiredContributors = [
   {
-    id: 'USR-010',
-    name: 'Alcides Antonio',
-    avatar: '/assets/avatar-10.png',
-    email: 'alcides.antonio@devias.io',
-    phone: '908-691-3242',
-    address: { city: 'Madrid', country: 'Spain', state: 'Comunidad de Madrid', street: '4158 Hedge Street' },
-    createdAt: dayjs().subtract(2, 'hours').toDate(),
-  },
-  {
-    id: 'USR-009',
-    name: 'Marcus Finn',
-    avatar: '/assets/avatar-9.png',
-    email: 'marcus.finn@devias.io',
-    phone: '415-907-2647',
-    address: { city: 'Carson City', country: 'USA', state: 'Nevada', street: '2188 Armbrester Drive' },
-    createdAt: dayjs().subtract(2, 'hours').toDate(),
-  },
-  {
-    id: 'USR-008',
-    name: 'Jie Yan',
-    avatar: '/assets/avatar-8.png',
-    email: 'jie.yan.song@devias.io',
-    phone: '770-635-2682',
-    address: { city: 'North Canton', country: 'USA', state: 'Ohio', street: '4894 Lakeland Park Drive' },
-    createdAt: dayjs().subtract(2, 'hours').toDate(),
-  },
-  {
-    id: 'USR-007',
-    name: 'Nasimiyu Danai',
-    avatar: '/assets/avatar-7.png',
-    email: 'nasimiyu.danai@devias.io',
-    phone: '801-301-7894',
-    address: { city: 'Salt Lake City', country: 'USA', state: 'Utah', street: '368 Lamberts Branch Road' },
-    createdAt: dayjs().subtract(2, 'hours').toDate(),
-  },
-  {
-    id: 'USR-006',
-    name: 'Iulia Albu',
+    id: 'HID-001',
+    name: 'Gulshan',
+    wp_id: 'WPO-425', // Added wp_id
     avatar: '/assets/avatar-6.png',
-    email: 'iulia.albu@devias.io',
-    phone: '313-812-8947',
-    address: { city: 'Murray', country: 'USA', state: 'Utah', street: '3934 Wildrose Lane' },
-    createdAt: dayjs().subtract(2, 'hours').toDate(),
+    email: '',
+    phone: '',
+    address: { city: 'Gulshan, Dhaka', country: 'Bangladesh' },
+    wasteVolumeReported: '1560 kg',
+    signedUp: '2024-11-01',
   },
   {
-    id: 'USR-005',
-    name: 'Fran Perez',
-    avatar: '/assets/avatar-5.png',
-    email: 'fran.perez@devias.io',
-    phone: '712-351-5711',
-    address: { city: 'Atlanta', country: 'USA', state: 'Georgia', street: '1865 Pleasant Hill Road' },
-    createdAt: dayjs().subtract(2, 'hours').toDate(),
+    id: 'HID-002',
+    name: 'Banani',
+    wp_id: 'WPO-980', // Added wp_id
+    avatar: '/assets/avatar-10.png',
+    email: '',
+    phone: '',
+    address: { city: 'Banani, Dhaka', country: 'Bangladesh' },
+    wasteVolumeReported: '1230 kg',
+    signedUp: '2024-11-01',
   },
+  {
+    id: 'HID-003',
+    name: 'Bashundhara',
+    wp_id: 'WPO-105', // Added wp_id
+    avatar: '/assets/avatar-8.png',
+    email: '',
+    phone: '',
+    address: { city: 'Bashundhara, Dhaka', country: 'Bangladesh' },
+    wasteVolumeReported: '980 kg',
+    signedUp: '2024-11-01',
+  },
+  {
+    id: 'HID-004',
+    name: 'Baridhara',
+    wp_id: 'WPO-785', // Added wp_id
+    avatar: '/assets/avatar-9.png',
+    email: '',
+    phone: '',
+    address: { city: 'Baridhara, Dhaka', country: 'Bangladesh' },
+    wasteVolumeReported: '857 kg',
+    signedUp: '2024-11-01',
+  },
+  {
+    id: 'HID-005',
+    name: 'Mirpur-10',
+    wp_id: 'WPO-512', // Added wp_id
+    avatar: '/assets/avatar-7.png',
+    email: '',
+    phone: '',
+    address: { city: 'Mirpur, Dhaka', country: 'Bangladesh' },
+    wasteVolumeReported: '752 kg',
+    signedUp: '2024-11-01',
+  },
+] satisfies Customer[];
 
+// Individual contributors
+const individualContributors = [
   {
-    id: 'USR-004',
-    name: 'Penjani Inyene',
-    avatar: '/assets/avatar-4.png',
-    email: 'penjani.inyene@devias.io',
-    phone: '858-602-3409',
-    address: { city: 'Berkeley', country: 'USA', state: 'California', street: '317 Angus Road' },
-    createdAt: dayjs().subtract(2, 'hours').toDate(),
-  },
-  {
-    id: 'USR-003',
-    name: 'Carson Darrin',
-    avatar: '/assets/avatar-3.png',
-    email: 'carson.darrin@devias.io',
-    phone: '304-428-3097',
-    address: { city: 'Cleveland', country: 'USA', state: 'Ohio', street: '2849 Fulton Street' },
-    createdAt: dayjs().subtract(2, 'hours').toDate(),
+    id: 'USR-001',
+    name: 'Rahim Uddin',
+    wp_id: 'WP-902', // Added wp_id
+    avatar: '/assets/avatar-1.png',
+    email: 'rahim.ud@gmail.com',
+    phone: '',
+    address: { city: 'Dhanmondi, Dhaka', country: 'Bangladesh' },
+    wasteVolumeReported: '355 kg',
+    signedUp: '2024-10-30',
   },
   {
     id: 'USR-002',
-    name: 'Siegbert Gottfried',
-    avatar: '/assets/avatar-2.png',
-    email: 'siegbert.gottfried@devias.io',
-    phone: '702-661-1654',
-    address: { city: 'Los Angeles', country: 'USA', state: 'California', street: '1798 Hickory Ridge Drive' },
-    createdAt: dayjs().subtract(2, 'hours').toDate(),
+    name: 'Fatema Nasrin',
+    wp_id: 'WP-667', // Added wp_id
+    avatar: '/assets/avatar-5.png',
+    email: 'fatema.nasrin@gmail.com',
+    phone: '',
+    address: { city: 'Mohammadpur, Dhaka', country: 'Bangladesh' },
+    wasteVolumeReported: '324 kg',
+    signedUp: '2024-10-28',
   },
   {
-    id: 'USR-001',
-    name: 'Miron Vitold',
-    avatar: '/assets/avatar-1.png',
-    email: 'miron.vitold@devias.io',
-    phone: '972-333-4106',
-    address: { city: 'San Diego', country: 'USA', state: 'California', street: '75247' },
-    createdAt: dayjs().subtract(2, 'hours').toDate(),
+    id: 'USR-003',
+    name: 'Rafiq Hossain',
+    wp_id: 'WP-334', // Added wp_id
+    avatar: '/assets/avatar-3.png',
+    email: 'rafiq.hossain@gmail.com',
+    phone: '',
+    address: { city: 'Uttara, Dhaka', country: 'Bangladesh' },
+    wasteVolumeReported: '288 kg',
+    signedUp: '2024-10-25',
+  },
+  {
+    id: 'USR-004',
+    name: 'Naila Islam',
+    wp_id: 'WP-888', // Added wp_id
+    avatar: '/assets/avatar-4.png',
+    email: 'naila.islam@gmail.com',
+    phone: '',
+    address: { city: 'Gulshan, Dhaka', country: 'Bangladesh' },
+    wasteVolumeReported: '240 kg',
+    signedUp: '2024-10-30',
+  },
+  {
+    id: 'USR-005',
+    name: 'Kamal Ahmed',
+    wp_id: 'WP-777', // Added wp_id
+    avatar: '/assets/avatar-2.png',
+    email: 'kamal.ahmed@gmail.com',
+    phone: '',
+    address: { city: 'Badda, Dhaka', country: 'Bangladesh' },
+    wasteVolumeReported: '235 kg',
+    signedUp: '2024-10-31',
   },
 ] satisfies Customer[];
 
@@ -113,7 +138,8 @@ export default function Page(): React.JSX.Element {
   const page = 0;
   const rowsPerPage = 5;
 
-  const paginatedCustomers = applyPagination(customers, page, rowsPerPage);
+  const paginatedHired = applyPagination(hiredContributors, page, rowsPerPage);
+  const paginatedIndividuals = applyPagination(individualContributors, page, rowsPerPage);
 
   return (
     <Stack spacing={3}>
@@ -136,10 +162,20 @@ export default function Page(): React.JSX.Element {
         </div>
       </Stack>
       <CustomersFilters />
+
+      <Typography variant="h5" sx={{ pt: '40px', pb: '5px', textAlign: 'center' }}>
+        Officially Hired Contributors
+      </Typography>
+
+      <CustomersTable count={paginatedHired.length} page={page} rows={paginatedHired} rowsPerPage={rowsPerPage} />
+
+      <Typography variant="h5" sx={{ pt: '40px', pb: '5px', textAlign: 'center' }}>
+        Community Contributors
+      </Typography>
       <CustomersTable
-        count={paginatedCustomers.length}
+        count={paginatedIndividuals.length}
         page={page}
-        rows={paginatedCustomers}
+        rows={paginatedIndividuals}
         rowsPerPage={rowsPerPage}
       />
     </Stack>

@@ -17,8 +17,8 @@ export interface TotalCustomersProps {
 }
 
 export function TotalCustomers({ diff, trend, sx, value }: TotalCustomersProps): React.JSX.Element {
-  const TrendIcon = trend === 'up' ? ArrowUpIcon : ArrowDownIcon;
-  const trendColor = trend === 'up' ? 'var(--mui-palette-success-main)' : 'var(--mui-palette-error-main)';
+  const TrendIcon = trend === 'up' ? ArrowUpIcon : ArrowUpIcon;
+  const trendColor = trend === 'up' ? 'var(--mui-palette-success-main)' : 'var(--mui-palette-success-main)';
 
   return (
     <Card sx={sx}>
@@ -31,9 +31,9 @@ export function TotalCustomers({ diff, trend, sx, value }: TotalCustomersProps):
               </Typography>
               <Typography variant="h4">{value}</Typography>
             </Stack>
-            <Avatar sx={{ backgroundColor: 'var(--mui-palette-success-main)', height: '56px', width: '56px' }}>
+            {/* <Avatar sx={{ backgroundColor: 'var(--mui-palette-success-main)', height: '56px', width: '56px' }}>
               <UsersIcon fontSize="var(--icon-fontSize-lg)" />
-            </Avatar>
+            </Avatar> */}
           </Stack>
           {diff ? (
             <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>

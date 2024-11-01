@@ -16,16 +16,16 @@ import { ArrowRight as ArrowRightIcon } from '@phosphor-icons/react/dist/ssr/Arr
 import dayjs from 'dayjs';
 
 const statusMap = {
-  pending: { label: 'Pending', color: 'warning' },
-  delivered: { label: 'Delivered', color: 'success' },
-  refunded: { label: 'Refunded', color: 'error' },
+  Scheduled: { label: 'Scheduled', color: 'warning' },
+  Cleared: { label: 'Cleared', color: 'success' },
+  Monitor: { label: 'Monitor', color: 'error' },
 } as const;
 
 export interface Order {
   id: string;
   customer: { name: string };
   amount: number;
-  status: 'pending' | 'delivered' | 'refunded';
+  status: 'Scheduled' | 'Cleared' | 'Monitor';
   createdAt: Date;
 }
 
@@ -45,6 +45,7 @@ export function LatestOrders({ orders = [], sx }: LatestOrdersProps): React.JSX.
             <TableRow>
               <TableCell>ID</TableCell>
               <TableCell>Location</TableCell>
+              <TableCell>Waste Volume</TableCell>
               <TableCell sortDirection="desc">Date</TableCell>
               <TableCell>Status</TableCell>
             </TableRow>
@@ -56,7 +57,8 @@ export function LatestOrders({ orders = [], sx }: LatestOrdersProps): React.JSX.
               return (
                 <TableRow hover key={order.id}>
                   <TableCell>{order.id}</TableCell>
-                  <TableCell>{order.customer.name}</TableCell>
+                  <TableCell>{order.location.name}</TableCell>
+                  <TableCell>{order.wasteVolume}</TableCell>
                   <TableCell>{dayjs(order.createdAt).format('MMM D, YYYY')}</TableCell>
                   <TableCell>
                     <Chip color={color} label={label} size="small" />

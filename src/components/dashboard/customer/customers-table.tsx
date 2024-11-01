@@ -30,6 +30,7 @@ export interface Customer {
   address: { city: string; state: string; country: string; street: string };
   phone: string;
   createdAt: Date;
+  signedUp: string;
 }
 
 interface CustomersTableProps {
@@ -74,9 +75,9 @@ export function CustomersTable({
                 />
               </TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
+              <TableCell>Id</TableCell>
               <TableCell>Location</TableCell>
-              <TableCell>Phone</TableCell>
+              <TableCell>Waste Reported</TableCell>
               <TableCell>Signed Up</TableCell>
             </TableRow>
           </TableHead>
@@ -104,12 +105,12 @@ export function CustomersTable({
                       <Typography variant="subtitle2">{row.name}</Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell>{row.email}</TableCell>
+                  <TableCell>{row.wp_id}</TableCell>
                   <TableCell>
                     {row.address.city}, {row.address.state}, {row.address.country}
                   </TableCell>
-                  <TableCell>{row.phone}</TableCell>
-                  <TableCell>{dayjs(row.createdAt).format('MMM D, YYYY')}</TableCell>
+                  <TableCell>{row.wasteVolumeReported}</TableCell>
+                  <TableCell>{row.signedUp}</TableCell>
                 </TableRow>
               );
             })}
